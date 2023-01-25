@@ -1,0 +1,14 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "no-loops"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "no-console": 0, // this to allow all console.logs. But make sure to delete all of the unnecessary ones them before pushing !
+    "no-loops/no-loops": 2 // for and while loops are illegal. You should use functions like map and forEach instead.
+  }
+}
