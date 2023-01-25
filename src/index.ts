@@ -1,6 +1,11 @@
 import express, { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import userRouter from './routes/user.routes';
+import sequelizeConnection from './db/config';
+
+// connect to the db
+sequelizeConnection();
 
 // create an instance of express
 const app: Application = express();
@@ -37,3 +42,5 @@ try {
     console.log('Unexpected error', error);
   }
 }
+
+// app.use('api/v1', userRouter);
