@@ -1,5 +1,4 @@
 import Joi from 'joi';
-import { User } from '../db/schemas';
 import { IUser } from '../interfaces';
 export const validateLoginData = (login: {
   email: string;
