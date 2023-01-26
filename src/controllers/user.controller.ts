@@ -1,28 +1,21 @@
-import User, { UserMap } from '../db/models/user.model';
-import sequelizeConnection from '../db/config';
-const sequelize = sequelizeConnection;
+import { Request, Response } from 'express';
+import { findAllUsersService } from '../services';
 
-async function doStuffWithUser() {
-  const newUser = await User.create({
-    name: 'Johnny',
-    preferredName: 'John',
-    email: 'johnny@gmail.com',
-    province: 'Souther',
-    district: 'Huye',
-    street: 'Taba',
-    cell: 'N/A',
-  });
-  console.log(newUser.id, newUser.name, newUser.preferredName);
-
-  const ourUser = await User.findByPk(1, {
-    include: [User.associations.address],
-    rejectOnEmpty: true, // Specifying true here removes `null` from the return type!
-  });
-
-  console.log(ourUser.addressId);
-}
-
-(async () => {
-  await sequelize.sync();
-  await doStuffWithUser();
-})();
+export const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const allUsers = await findAllUsersService();
+    res.status(200).json({ status: 200, success: true, data: [allUsers] });
+  } catch (error) {
+    if (error instanceof Error) {
+      // ✅ TypeScript knows error is Error
+      console.log(
+        ` 🔴 Error fetching users from the db: 😟 ${error.message} 🔴`,
+      );
+      res
+        .status(500)
+        .json({ status: 500, success: false, message: `${error.message}` });
+    } else {
+      console.log('Unexpected error', error);
+    }
+  }
+};
