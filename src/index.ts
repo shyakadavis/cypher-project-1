@@ -23,7 +23,7 @@ export const get = () => {
   // hit this / route to test the health check of our api
   app.get('/', async (req: Request, res: Response): Promise<Response> => {
     return res.status(200).send({
-      message: `Welcome to team Cypher's API! \n Endpoints available at http://localhost:${PORT}/api/v1`,
+      message: `Welcome to team Cypher's API! \n Endpoints available at http://localhost:${PORT}/api/v1 + whatever endpoint you want to hit`,
     });
   });
 
@@ -31,7 +31,7 @@ export const get = () => {
   // don't directly add other routes here.
   // follow the pattern and export your router from a <name>.routes.ts file, head over to the index.ts in /routers and add it from there
   // it will be exported along with the others.
-  app.use('api/v1', routes);
+  app.use('/api/v1', routes);
 
   return app;
 };
@@ -60,4 +60,4 @@ export const start = () => {
   }
 };
 
-start();
+void start();
