@@ -109,7 +109,7 @@ Distributed under the MIT License.
 
 Forgot to add them.
 
-Project Link: [Personal Portfolio](https://github.com/davis-shyaka/cypher-project-1)
+Project Link: [Project](https://github.com/davis-shyaka/cypher-project-1)
 
 <!-- ACKNOWLEDGEMENTS -->
 
