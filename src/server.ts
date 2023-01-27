@@ -7,7 +7,7 @@ import passport from 'passport';
 import './middleware/auth/auth.middleware';
 
 // connect to the db
-// sequelizeConnection();
+sequelizeConnection();
 
 // create an instance of express
 const app: Application = express();

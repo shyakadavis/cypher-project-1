@@ -14,3 +14,12 @@ export interface IUser {
   cell: string;
   street: string;
 }
+
+export interface IUpdateData {
+  email: string;
+  province: string;
+  district: string;
+  sector: string;
+  cell: string;
+  street: string;
+}
