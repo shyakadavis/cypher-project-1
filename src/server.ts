@@ -1,13 +1,27 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import sequelizeConnection from './db/config';
 import routes from './routes/index';
+import session from 'express-session';
+import passport from 'passport';
+import './middleware/auth/auth.middleware';
 
 // connect to the db
-sequelizeConnection();
+// sequelizeConnection();
 
 // create an instance of express
 const app: Application = express();
+
+// Handling Passport
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET as string,
+    resave: true,
+    saveUninitialized: true,
+  }),
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // tell app to listen on the port specified in the .env file, if it fails for some reason, listen on 3000
 const PORT = process.env.PORT || 3000;
@@ -32,6 +46,40 @@ export const get = () => {
   // follow the pattern and export your router from a <name>.routes.ts file, head over to the index.ts in /routers and add it from there
   // it will be exported along with the others.
   app.use('/api/v1', routes);
+
+  //middleware
+  function isLoggedIn(req: Request, res: Response, next: NextFunction) {
+    req.user ? next() : res.sendStatus(401);
+  }
+
+  app.get('/auth', (req, res) => {
+    res.send('<a href="/auth/google">Authentication with Google</a>');
+  });
+
+  app.get(
+    '/auth/google',
+    passport.authenticate('google', { scope: ['email', 'profile'] }),
+  );
+
+  // This is where a user will be redirected after signing in with google
+  app.get(
+    '/google/callback',
+    passport.authenticate('google', {
+      successRedirect: '/protected',
+      failureRedirect: '/auth/failure',
+    }),
+  );
+
+  // This where a user will be redirected when an error occured while signing in
+  app.get('/auth/failure', (req: Request, res: Response) => {
+    res.send('something went wrong..');
+  });
+  app.get('/protected', isLoggedIn, (req: Request, res: Response) => {
+    const currentUser = req.user;
+    if (currentUser) {
+      res.send(`Hello ${currentUser}`);
+    }
+  });
 
   return app;
 };
