@@ -77,7 +77,8 @@ export const get = () => {
   app.get('/protected', isLoggedIn, (req: Request, res: Response) => {
     const currentUser = req.user;
     if (currentUser) {
-      res.send(`Hello ${currentUser}`);
+      //@ts-ignore
+      res.send(`Hello ${currentUser.displayName}`);
     }
   });
 
