@@ -1,18 +1,17 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../config';
 import bcrypt from 'bcrypt';
-
 export const User = sequelize.define(
   'user',
   {
     surName: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: false,
     },
     givenName: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: false,
     },
     email: {
@@ -36,23 +35,27 @@ export const User = sequelize.define(
     },
     province: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     district: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     sector: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     cell: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     street: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
+    },
+    avatar: {
+      type: Sequelize.STRING,
+      allowNull: true,
     },
   },
   {
